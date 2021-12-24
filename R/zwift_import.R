@@ -22,7 +22,7 @@ get_zwift_activities <- function(un,pw,limit){
     "User-Agent" = "Zwift/115 CFNetwork/758.0.2 Darwin/15.0.0"
   )
 
-  res <- httr::GET(paste0(baseurl,'/api/profiles/me'), add_headers(headers))
+  res <- httr::GET(paste0(baseurl,'/api/profiles/me'), httr::add_headers(headers))
   profile <- jsonlite::fromJSON(rawToChar(res$content))
 
   #get the activities
@@ -44,7 +44,7 @@ download_zwift <- function(un,pw,fitid,fn){
                    "grant_type" = "password"
   )
 
-  res <- POST(url, body = headers, encode = "form")
+  res <- httr::POST(url, body = headers, encode = "form")
   auth <- jsonlite::fromJSON(rawToChar(res$content))
 
   #get the profile
@@ -54,13 +54,13 @@ download_zwift <- function(un,pw,fitid,fn){
     "User-Agent" = "Zwift/115 CFNetwork/758.0.2 Darwin/15.0.0"
   )
 
-  res <- GET(paste0(baseurl,'/api/profiles/me'), add_headers(headers))
+  res <- httr::GET(paste0(baseurl,'/api/profiles/me'), httr::add_headers(headers))
   profile <- jsonlite::fromJSON(rawToChar(res$content))
 
   #download the activity
-  res <- GET(paste0(baseurl,'/api/profiles/',profile$id,
+  res <- httr::GET(paste0(baseurl,'/api/profiles/',profile$id,
                     "/activities/",fitid),
-             add_headers(headers))
+             httr::add_headers(headers))
   act <- jsonlite::fromJSON(rawToChar(res$content))
 
   fit_url <- paste0('https://',act$fitFileBucket,'.s3.amazonaws.com/',act$fitFileKey)
