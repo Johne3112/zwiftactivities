@@ -9,6 +9,6 @@
 ## To download the FIT file for a Zwift activity
 ##### download_zwift(zwift username,zwift password,activityID,filename)
 
-ActivityID is the firts column in the dataframe from get_zwift_activities
+ActivityID is the first column in the dataframe from get_zwift_activities
 
 filename should be the full path and filename ending in .fit
